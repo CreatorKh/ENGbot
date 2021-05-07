@@ -22,19 +22,20 @@ def welcome(message):
     item8 = types.KeyboardButton("Sports 1")
     item9 = types.KeyboardButton("Sports 2")
 
-
-    markup.add(item1, item2, item3, item4, item5, item6, item9,item8)
+    markup.add(item1, item2, item3, item4, item5, item6, item9, item8)
 
     bot.send_message(message.chat.id,
                      "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, выбери пожалуйста топик.".format(
                          message.from_user, bot.get_me()),
-                     parse_mode='html', reply_markup=markup)\
+                     parse_mode='html', reply_markup=markup)
+
 
 @bot.message_handler(commands=['addcard'])
 def newcard(message):
     bot.send_message(message.chat.id, "Отправьте флешкарту(фото)")
     if message.photo:
         bot.get_file(message.photo)[-1].file_id.download(f'static/[file_unique_id].jpg')
+
 
 @bot.message_handler(content_types=['text'])
 def lalala(message):
@@ -60,7 +61,8 @@ def lalala(message):
             item14 = types.InlineKeyboardButton("прогулять собаку", callback_data='a14')
             item15 = types.InlineKeyboardButton("помыть руки", callback_data='a15')
 
-            markup.add(item1, item2, item3, item4, item5, item6, item7,item8, item9, item10, item11, item12, item13, item14, item15)
+            markup.add(item1, item2, item3, item4, item5, item6, item7,
+                       item8, item9, item10, item11, item12, item13, item14, item15)
 
             bot.send_message(message.chat.id, 'WHICH ONE?', reply_markup=markup)
 
@@ -127,7 +129,6 @@ def lalala(message):
             item11 = types.InlineKeyboardButton("домашние животные", callback_data='d11')
             item12 = types.InlineKeyboardButton("сестра", callback_data='d12')
             item13 = types.InlineKeyboardButton("сын", callback_data='d13')
-
 
             markup.add(item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13)
 
@@ -218,30 +219,24 @@ def callback_inline(call):
     elif directory == 'g':
         p += 'sports 2'
 
-
-
-    p+= '/'
+    p += '/'
 
     num = call.data[1:]
     p += num + '.jpg'
     try:
-        with open(p,'rb') as qq:
+        with open(p, 'rb') as qq:
             bot.send_photo(call.message.chat.id, qq)
-            bot.answer_callback_query(callback_query_id=call.id, show_alert=False,
-                                  text='Do not forget')
+            bot.answer_callback_query(callback_query_id=call.id, show_alert=False, text='Do not forget')
 
     except Exception as e:
         print(repr(e))
+
 
 @bot.message_handler(commands=['addcard'])
 def newcard(message):
     bot.send_message(message.chat.id, "Отправьте флешкарту(фото)")
     if message.photo:
         bot.get_file(message.photo)[-1].file_id.download('static/[file_id].jpg')
-
-
-
-
 
 
 # RUN
